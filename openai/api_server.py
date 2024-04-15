@@ -74,7 +74,12 @@ async def health() -> Response:
 @app.get("/v1/models")
 async def show_available_models():
     models = await openai_serving_chat.show_available_models()
-    return JSONResponse(content=models.model_dump())
+    content = models.model_dump()
+    fake_stuff_to_return = content[0]
+    fake_stuff_to_return["id"] = "SudhansuhSahil/Llama-2-7b-function-calling"
+    fake_stuff_to_return["root"] = "SudhansuhSahil/Llama-2-7b-function-calling"
+    fake_stuff_to_return["owned_by"] = "ASVA AI"
+    return JSONResponse(content=[fake_stuff_to_return])
 
 
 @app.get("/version")
